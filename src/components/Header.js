@@ -1,16 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, TextInput, StyleSheet} from 'react-native'
 
 export default props => {
 
+    const [inputState, setInputState] = useState()
+
     return (
         <View style={styles.container}>
-            <View style={styles.views}>
+            <View style={[styles.views, {marginTop: '20%'}]}>
                 <Text style={styles.h1txt}>Sua biblioteca de <Text style={styles.clrBlack}>Poke</Text>mons</Text>
                 <Text style={styles.h2txt}>Basta pesquisar a especie que deseja</Text>
             </View>
             <View style={styles.views}>
-                <TextInput placeholder="informe o nome do Pokemon" style={styles.input} />
+                <TextInput onChangeText={desc => setInputState(desc)} placeholder="informe o nome do Pokemon" style={styles.input} />
             </View>
         </View>
     )
@@ -28,14 +30,14 @@ const styles = StyleSheet.create({
     },
     views: {
         flex: 1,
-        alignItems: 'center'
+        width: '100%',
+        alignItems: 'center',
     },
     h1txt: {
         color: '#fff',
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
-        marginTop: 40
     },
     h2txt: {
         color: '#fff',

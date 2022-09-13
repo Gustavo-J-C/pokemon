@@ -1,34 +1,48 @@
 import React, {useState, useEffect} from 'react'
 import {View, Text, Modal, FlatList, TouchableOpacity, StyleSheet} from 'react-native'
+import Infos from './Infos'
 import axios from 'axios'
 
 export default props => {
 
-    const [pokemons, setPokemons] = useState(null)
+    const initialState = {
+        pokemonList: {},
+        showInfo: false,
+        atual: {},
+        pokeImg: {}
+    }
+
+    const [pokemons, setPokemons] = useState(initialState)
 
     const getPokemonData = () => {
         const url = "https://pokeapi.co/api/v2/pokemon/";
-        console.log("vamos ao fetch");
         fetch(url)
             .then(resposta => resposta.json())
             .then( json => {
-                const pokemonList = json.results
-                pokemonList.sort(function (a,b) {
-                    return (a.nome < b.nome) ? -1 : true
-                })
-                setPokemons(pokemonList)
+                const pokemonList = json.results                
+                setPokemons({...pokemons, pokemonList})
+            });
+    }
+
+    const getLabel = (name) => {
+        const url = `https://pokeapi.co/api/v2/pokemon/${name}/`
+        let img = ''
+        fetch(url)
+            .then(resposta => resposta.json())
+            .then( json => {
+                img = json.sprites.other.dream_world.front_default
+                setPokemons({...pokemons, showInfo: true, pokeImg: img})     
             });
     }
     
 
-    useEffect(() => {
-      getPokemonData()   
-    }, [])
+   
     
-    const renderItem = ({ ...pokemons }) => (
-        <TouchableOpacity style={styles.listContent} activeOpacity={0.3}>
+    const renderItem = ({ ...data}) => (
+        <TouchableOpacity style={styles.listContent} onPress={() => {setPokemons({...pokemons, showInfo: true, atual: data}), getLabel(data.name)}}
+         activeOpacity={0.3}>
             <View style={styles.listItem}>
-                <Text style={styles.listTxt}>{pokemons.name}</Text>
+                <Text style={styles.listTxt}>{data.name}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -36,7 +50,8 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <FlatList data={pokemons}
+            <Infos isVisible={pokemons.showInfo} img={pokemons.pokeImg} onCancel={() => setPokemons({...pokemons, showInfo: false, pokeImg: {}})}/>
+            <FlatList data={pokemons.pokemonList}
             renderItem={({item}) => renderItem({...item})}/>
         </View>
     )
@@ -51,10 +66,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.1)'
     },
     listContent: {
-
+        marginTop: 10,
     },
     listItem: {
-        height: 40,
+        height: 80,
         width: '95%',
         borderRadius: 10,
         justifyContent: 'center',
