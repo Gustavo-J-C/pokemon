@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {View, Text, FlatList, ImageBackground, StyleSheet, TextInput} from 'react-native'
-import MainImage from '../../assets/images/MainBackground.jpg'
 import Infos from '../components/Infos'
 import Item from '../components/Item'
 
-export default props => {
+export default Main = () => {
 
     const initialState = {
         atual: {},
@@ -41,30 +40,28 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <ImageBackground style={styles.container} source={MainImage}>
-                    <Infos isVisible={modal} data={pokemons} resetPokemon={setPokemons} onCancel={() => setModal(false)}/>
-                    <View style={styles.header}>
-                        <View style={[styles.views, {marginTop: '20%'}]}>
-                            <Text style={styles.h1txt}>Sua biblioteca de <Text style={styles.clrBlack}>Poke</Text>mons</Text>
-                            <Text style={styles.h2txt}>Basta pesquisar a especie que deseja</Text>
-                        </View>
-                        <View style={styles.views}>
-                            <TextInput onChangeText={desc => setInputState(desc)} placeholder="informe o nome do Pokemon" style={styles.input} />
-                        </View>
-                    </View>
-                    <View style={styles.body}>
-                        <FlatList data={pokeList}
-                        renderItem={(item) => <Item setPokemons={setPokemons} modal={setModal} {...item}/>}/>
-                    </View>
-
-            </ImageBackground>
+            <Infos isVisible={modal} data={pokemons} resetPokemon={setPokemons} onCancel={() => setModal(false)}/>
+            <View style={styles.header}>
+                <View style={[styles.views, {marginTop: '20%'}]}>
+                    <Text style={styles.h1txt}>Sua biblioteca de <Text style={styles.clrBlack}>Poke</Text>mons</Text>
+                    <Text style={styles.h2txt}>Basta pesquisar a especie que deseja</Text>
+                </View>
+                <View style={styles.views}>
+                    <TextInput onChangeText={desc => setInputState(desc)} placeholder="informe o nome do Pokemon" style={styles.input} />
+                </View>
+            </View>
+            <View style={styles.body}>
+                <FlatList data={pokeList}
+                renderItem={(item) => <Item setPokemons={setPokemons} modal={setModal} {...item}/>}/>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#FFF",
     },
     body: {
         flex: 5,

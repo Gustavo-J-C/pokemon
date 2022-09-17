@@ -1,9 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { SvgCssUri } from 'react-native-svg';
 
 export default props => {
     const {name, url} = props.item
     const {index} = props
+    const [img, setImg] = useState("");
+    console.log(props);
+
+    fetch(url)
+        .then(resposta => resposta.json())
+        .then( json => {
+            const imgSource = json.sprites.other.dream_world.front_default
+            setImg(imgSource)     
+    });
+
     return (
 
         <View>
@@ -12,6 +23,10 @@ export default props => {
             onPress={() => {props.modal(true), props.setPokemons({name,  url, index})}}
             onClose={props.onClose}>
                 <View style={styles.item}>
+                    <SvgCssUri width='30%'
+                    height='30%'
+                    uri={img}
+                    />
                     <Text style={styles.listTxt}>{name}</Text>
                 </View>
             </TouchableOpacity>
