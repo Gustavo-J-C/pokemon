@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {Api} from './src/context/Api';
 import Main from './src/screens/Main';
+import Infos from './src/screens/Infos';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
             headerShown: false
           }}>
           <Stack.Screen name="Home" component={Main} />
+          <Stack.Screen name="Infos" component={Infos} />
         </Stack.Navigator>
       </NavigationContainer>
     // </Api>

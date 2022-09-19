@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import {View, Text, FlatList, ImageBackground, StyleSheet, TextInput} from 'react-native'
-import Infos from '../components/Infos'
 import Item from '../components/Item'
 
-export default Main = () => {
+export default Main = ({navigation}) => {
 
+    console.log(navigation);
     const initialState = {
         atual: {},
         url: {},
@@ -25,22 +25,15 @@ export default Main = () => {
     const [inputState, setInputState] = useState('')
     const [modal, setModal] = useState(false)
     const [pokeList, setPokeList] = useState()
-
-
-    useEffect(() => {
-      setPokemons({})
-    }, [modal])
     
     useEffect(() => {
         getPokemonData()
-    
     }, [])
 
 
 
     return (
         <View style={styles.container}>
-            <Infos isVisible={modal} data={pokemons} resetPokemon={setPokemons} onCancel={() => setModal(false)}/>
             <View style={styles.header}>
                 <View style={[styles.views, {marginTop: '20%'}]}>
                     <Text style={styles.h1txt}>Sua biblioteca de <Text style={styles.clrBlack}>Poke</Text>mons</Text>
@@ -52,7 +45,7 @@ export default Main = () => {
             </View>
             <View style={styles.body}>
                 <FlatList data={pokeList}
-                renderItem={(item) => <Item setPokemons={setPokemons} modal={setModal} {...item}/>}/>
+                renderItem={(item) => <Item navigation={navigation} setPokemons={setPokemons} modal={setModal} {...item}/>}/>
             </View>
         </View>
     )
@@ -85,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     h1txt: {
-        color: '#fff',
+        color: '#595758',
         fontSize: 30,
         textAlign: 'center',
         fontWeight: 'bold',
@@ -108,6 +101,8 @@ const styles = StyleSheet.create({
         height: 30,
         backgroundColor: '#FFF',
         elevation: 5,
+        borderColor: "#D3D3D3",
+        borderWidth: 1,
         borderRadius: 6,
         fontSize: 16,
         paddingLeft: 10

@@ -1,12 +1,15 @@
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {PokeData} from '../context/Api'
 import { SvgCssUri } from 'react-native-svg';
 
 export default props => {
+    const {navigation} = props
     const {name, url} = props.item
     const {index} = props
     const [img, setImg] = useState("");
-    console.log(props);
+    const pokeContext = PokeData();
+
 
     fetch(url)
         .then(resposta => resposta.json())
@@ -20,14 +23,17 @@ export default props => {
         <View>
             <TouchableOpacity style={styles.content}
             activeOpacity={0.3}
-            onPress={() => {props.modal(true), props.setPokemons({name,  url, index})}}
+            onPress={() => {navigation.navigate("Infos"), props.setPokemons({name,  url, index})}}
             onClose={props.onClose}>
                 <View style={styles.item}>
                     <SvgCssUri width='30%'
-                    height='30%'
+                    height='70%'
                     uri={img}
                     />
-                    <Text style={styles.listTxt}>{name}</Text>
+                    <View>
+                        <Text style={styles.listTxt}>{name}</Text>
+                        <Text style={styles.listTxt}>{name}</Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </View>
@@ -42,8 +48,9 @@ const styles = StyleSheet.create({
     item: {
         height: 80,
         width: '95%',
+        display: 'flex',
+        flexDirection: 'row',
         borderRadius: 10,
-        justifyContent: 'center',
         alignItems: 'center',
         margin: 10,
         backgroundColor: 'rgba(252,0,0,0.8)',

@@ -6,20 +6,19 @@ export default props => {
 
     const [img, setImg] = useState('')
     
-    useEffect(() => {
-        fetch(props.data.url)
-        .then(resposta => resposta.json())
-        .then( json => {
-            const imgSource = json.sprites.other.dream_world.front_default
-            setImg(imgSource)     
-        });
-    }, [props])
+    // useEffect(() => {
+    //     fetch(props?.data?.url)
+    //     .then(resposta => resposta.json())
+    //     .then( json => {
+    //         const imgSource = json.sprites.other.dream_world.front_default
+    //         setImg(imgSource)     
+    //     });
+    // }, [props])
 
-    console.log(props.data);
     return (
-        <Modal transparent visible={props.isVisible} 
+        <View
             animation='slide'>
-            <TouchableWithoutFeedback onPress={props.onCancel}>
+            <TouchableWithoutFeedback onPress={props?.onCancel}>
                 <View style={styles.overLay}></View>
             </TouchableWithoutFeedback>
             <View style={styles.conta}>
@@ -27,12 +26,12 @@ export default props => {
                 height='30%'
                 uri={img}
                 />
-                <Text>{props.data?.name}</Text>
+                <Text>{props?.data?.name}</Text>
             </View>
-            <TouchableWithoutFeedback onPress={props.onCancel}>
+            <TouchableWithoutFeedback onPress={props?.onCancel}>
                 <View style={styles.overLay}></View>
             </TouchableWithoutFeedback>
-        </Modal>
+        </View>
     )
 }
 

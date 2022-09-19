@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {View, Text, Modal, FlatList, TouchableOpacity, StyleSheet} from 'react-native'
-import Infos from './Infos'
 import axios from 'axios'
 
 export default props => {
@@ -50,7 +49,6 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <Infos isVisible={pokemons.showInfo} img={pokemons.pokeImg} onCancel={() => setPokemons({...pokemons, showInfo: false, pokeImg: {}})}/>
             <FlatList data={pokemons.pokemonList}
             renderItem={({item}) => renderItem({...item})}/>
         </View>
